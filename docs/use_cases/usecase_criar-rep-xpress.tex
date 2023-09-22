@@ -1,0 +1,79 @@
+\documentclass[../relatorio.tex]{subfiles}
+\begin{document}
+Registo de uma nova reparação expresso no sistema, incluindo o material utilizado, tempo consumido e preço.
+Devido à reparação expresso não possuir um plano de trabalhos definido no sistema, o Colaborador especializado
+apenas insere o nome, preço e tempo estimados.
+\begin{itemize}
+    \item[Use Case] {\underline{Criar Reparação Expresso}}
+    \item[Cenários] {2}
+    \item[Pré-condição] {Colaborador especializado autenticado}
+    \item[Pós-condição] {Reparação expresso fica registada no Sistema}
+          \begin{flushleft}
+              \textbf{Fluxo Normal}
+          \end{flushleft}
+          \begin{enumerate}
+              \item Colaborador especializado insere nome da reparação a adicionar
+              \item Sistema regista nome da reparação
+              \item Colaborador especializado insere dados da reparacao % descrição, ...
+              \item Sistema regista reparação expresso
+          \end{enumerate}
+          \begin{flushleft}
+            \textbf{Fluxo de Exceção 1 (passo 2) [Nome da reparação já existe]}
+        \end{flushleft}
+        \begin{itemize}
+            \item[2.1] Sistema comunica que nome da reparação já existe
+        \end{itemize}
+\end{itemize}
+\begin{landscape}
+    \begin{table}[!h]
+        \centering
+        \begin{tabular}{|p{5cm}|p{1cm}|p{4cm}|p{6cm}|p{3cm}|}
+            \hline
+            \rowcolor{gray!20!white}
+            Use Case & Fluxo                                            & Responsabilidade & API & Subsistema \\
+            \hline
+            \rowcolor{yellow}
+            Colaborador especializado insere nome da reparação
+                     & UI
+                     & 
+                     & 
+                     & 
+            \\
+            \hline
+            Sistema verifica nome da reparação
+                     & 
+                     & verifica se o nome já existe
+                     & existeRepXpresso(nome : String) : Boolean
+                     & SSReparacoes
+            \\
+            \hline
+            \rowcolor{yellow}
+            Colaborador especializado insere dados da reparacao
+                     & UI
+                     & 
+                     & 
+                     & 
+            \\
+            \hline
+            Sistema regista reparação expresso
+                     & 
+                     & regista reparação expresso
+                     & registarRepXpresso(nome : String, tempo : Integer, preco : Double)
+                     & SSReparacoes
+            \\
+            \hline
+            \rowcolor{red!30}
+            Exceção  & 1                                                 &  \multicolumn{3}{c}{Nome da reparação já existe}\\
+            \hline
+            Sistema comunica que nome da reparação já existe
+                     & UI
+                     & 
+                     & 
+                     & 
+            \\
+            \hline
+        \end{tabular}
+        \caption{Análise Use Case - Criar Reparação Expresso (ver \ref{criar_rep_expresso})}
+    \end{table}
+\end{landscape}
+\end{document}

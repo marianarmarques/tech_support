@@ -1,0 +1,98 @@
+\documentclass[../relatorio.tex]{subfiles}
+\begin{document}
+Progressão de uma reparação, através da realização do passo.
+É atualizado o \textit{stock} do material gasto e registado do tempo efetivamente consumido.
+
+De maneira a não aumentar a complexidade do trabalho não foram considerados stocks de materiais, apesar de estes serem referidos neste \textit{Use Case}.
+Assim quando se realiza o passo não é necessário decrementar o stock em função da quantidade de material gasto.
+Como referido anteriormente, a adição da agenda permitiu que as reparações ficassem logo atribuidas a um técnico no momento em que foram criadas. Assim
+já não é possível uma reparação ser realizada por mais que um técnico e ao contrário do que foi estabelecido na primeira fase já não é necessário identificar 
+o autor de cada passo.
+\begin{itemize}
+    \item[Use Case] {\underline{}}
+    \item[Cenários] {4}
+    \item[Pré-condição] {Técnico autenticado e material necessário disponível}
+    \item[Pós-condição] {Passo adicionado à lista de passos realizados}
+          \begin{flushleft}
+              \textbf{Fluxo Normal}
+          \end{flushleft}
+          \begin{enumerate}
+              \item Técnico indica a identificação da reparação a ser efetuada 
+              \item Sistema seleciona a reparação
+              \item Sistema seleciona o passo de reparação atual
+              \item Técnico indica referência do material gasto
+              \item Sistema altera \textit{stock} do material gasto
+              \item Técnico indica tempo e custo efetivamente gasto 
+              \item Sistema regista tempo e custo efetivamente gasto
+              \item Sistema adiciona passo à lista de passos realizados
+          \end{enumerate}
+\end{itemize}
+
+\begin{landscape}
+    \begin{table}[!h]
+        \centering
+        \begin{tabular}{|p{5cm}|p{1cm}|p{4cm}|p{6cm}|p{3cm}|}
+            \hline
+            \rowcolor{gray!20!white}
+            Use Case & Fluxo & Responsabilidade & API & Subsistema \\
+            \hline
+            \rowcolor{yellow}
+            Técnico indica a identificação da reparação a ser efetuada 
+                     & UI
+                     &
+                     &
+                     &
+            \\
+            \hline
+            Sistema seleciona a reparação
+                     & 
+                     & Sistema seleciona a reparação a partir do seu ID
+                     & getRep(repID: String): Reparacao
+                     & SubReparacoes
+            \\
+            \hline
+            Sistema seleciona o passo de reparação atual
+                    & 
+                    & Sistema seleciona o passo de reparação a partir do seu ID
+                    & getPassoAtual(): PassoReparacao
+                    & SubReparacoes
+            \\
+            \hline
+            \rowcolor{yellow}
+            Técnico indica referência do material gasto
+                     & UI
+                     &
+                     &
+                     &        
+            \\
+            \hline
+            \rowcolor{yellow}
+            Sistema altera \textit{stock} do material gasto
+                     & 
+                     & Sistema decrementa o \textit{stock} do material gasto
+                     & consumeMaterial(mat: Material)
+                     & SubReparacoes
+            \\
+            \hline
+            \rowcolor{yellow}
+            Técnico indica tempo e custo efetivamente gasto
+                     & UI
+                     & 
+                     &
+                     & 
+            \\
+            \hline
+            Sistema regista tempo e custo efetivamente gasto e Técnico
+            Sistema adiciona passo à lista de passos realizados
+                     & 
+                     & Sistema regista os valores do passo após ter sido concretizado
+                     & registaPassoRealizado(tempo : Integer, custo : Double)
+                     & SubReparacoes
+            \\
+            \hline
+        \end{tabular}
+        \caption{Análise Use Case - Realizar passo da reparação (Ver \ref{realizar_passo_rep})}
+    \end{table}
+\end{landscape}
+
+\end{document}

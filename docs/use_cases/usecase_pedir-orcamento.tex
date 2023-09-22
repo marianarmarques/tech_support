@@ -1,0 +1,108 @@
+\documentclass[../relatorio.tex]{subfiles}
+\begin{document}
+Resgisto do pedido de orçamento de um equipamento através do seu identificador.
+
+A única alteração realizada em relação à primeria fase foi a de acrescentar a responsabilidade ao sistema de registar a receção de 
+um equipamento, tal como no \textit{Use Case} "Realizar passo da reparação".
+\begin{itemize}
+	\item[Use Case] {\underline{Pedir orçamento}}
+	\item[Cenários] {1 e 2}
+	\item[Pré-condição] {Funcionário autenticado e cliente registado}
+	\item[Pós-condição] {Pedido de orçamento adicionado}
+	      \begin{flushleft}
+		      \textbf{Fluxo Normal}
+	      \end{flushleft}
+	      \begin{enumerate}
+		      \item Funcionário insere identificador do cliente
+              \item Sistema seleciona cliente
+		      \item Funcionário insere identificador do equipamento
+		      \item Sistema verifica identificador do equipamento
+		      \item Funcionário insere descrição da avaria regista pedido de orçamento
+		      \item Sistema adiciona pedido de orçamento
+		      \item Sistema regista receção do equipamento
+	      \end{enumerate}
+
+	      \begin{flushleft}
+		      \textbf{Fluxo Alternativo 1 (passo 4) [Equipamento não registado]}
+	      \end{flushleft}
+	      \begin{itemize}
+		      \item[2.1] $\ll include \gg$ Registar equipamento
+		      \item[2.2] Regressa ao passo 3
+	      \end{itemize}
+\end{itemize}
+\begin{landscape}
+    \begin{table}[!h]
+        \centering
+        \begin{tabular}{|p{5cm}|p{1cm}|p{4cm}|p{6cm}|p{3cm}|}
+            \hline
+            \rowcolor{gray!20!white}
+            Use Case & Fluxo                                            & Responsabilidade & API & Subsistema \\
+            \hline
+            \rowcolor{yellow}
+            Funcionário insere identificador do cliente
+                     & UI
+                     & 
+                     & 
+                     & 
+            \\
+            \hline
+            Sistema seleciona cliente
+                     & 
+                     & procura cliente
+                     & getCliente(CliID : String) : Cliente
+                     & SubClientes
+            \\
+            \hline
+            \rowcolor{yellow}
+            Funcionário insere identificador do equipamento
+                     & UI
+                     & 
+                     & 
+                     & 
+            \\
+            \hline
+            Sistema verifica identificador do equipamento
+                     & 
+                     & verifica se o equipamento existe
+                     & existeEquipamento(codR : String, marca: String) : Boolean
+                     & SubClientes
+            \\
+            \hline
+			\rowcolor{yellow}
+			Funcionário regista pedido de orçamento
+                     & UI
+                     & 
+                     & 
+                     & 
+            \\
+            \hline
+			Sistema adiciona pedido de orçamento
+            Sistema regista receção do equipamento
+                     & 
+                     & regista pedido de orçamento e receção do equipamento
+                     & registarOrcamento(nif : String, equipID : String, descr: String, funId : String)
+                     & SubReparacoes
+            \\
+            \hline
+            \rowcolor{green!30}
+            Alternativo  & 1                                               &  \multicolumn{3}{c}{Equipamento não registado}\\
+            \hline
+            $\ll include \gg$ Registar equipamento
+                     & 
+                     & 
+                     & 
+                     & 
+            \\
+            \hline
+			Regressa ao passo 3
+                     & 
+                     & 
+                     & 
+                     & 
+            \\
+            \hline
+        \end{tabular}
+        \caption{Análise Use Case - Pedir orçamento (ver \ref{pedir_orcamento})}
+    \end{table}
+\end{landscape}
+\end{document}

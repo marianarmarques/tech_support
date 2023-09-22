@@ -1,0 +1,260 @@
+\documentclass[../relatorio.tex]{subfiles}
+\begin{document}
+Reparação de um equipamento, realizada por um técnico, tendo em conta o plano de trabalhos.
+
+Como a adição das agendas, já não é viável pedir a reparação mais urgente, uma vez que todas as reparações ja foram distribuidas
+uniformemente pelos diferentes técnicos.
+Outra modificação efetuda neste \textit{Use Case} foi a alteração do estado da reparação aquando do ínicio da reparação para "emReparacao".
+
+Na primeira fase estava estabelecido que quando uma reparação era interrompida, esta era adicionada à lista de reparações pendentes, porém como
+referido anteriormente esta lista deixou de existir com o uso das agendas e a solução encontrada foi alterar o estado da reparação para "aguardaReparacao".
+Apesar de se verificar esta alteração ao nível do \textit{Use Case}, o mesmo não acontece ao nível da implementação que não foi estabelecido nenhum
+mecanismo capaz de lidar com interrupções.
+\begin{itemize}
+    \item[Use Case] {\underline{Realizar reparação}}
+    \item[Cenários] {4}
+    \item[Pré-condição] {Técnico autenticado e equipamentos para reparar}
+    \item[Pós-condição] {Equipamento reparado}
+          \begin{flushleft}
+              \textbf{Fluxo Normal}
+          \end{flushleft}
+          \begin{enumerate}
+              \item Técnico consulta a sua agenda e indica o identificador da reparação a ser efetuada
+              \item Sistema devolve reparação
+              \item Sistema altera estado da reparação para em reparacao
+              \item Técnico pede o plano de trabalhos da reparação
+              \item Técnico indica os passos da reparação concretizados
+              \item Sistema regista passos da reparação como realizados
+              \item Sistema regista a conclusão da reparação
+              \item Sistema muda estado da reparação para reparada
+              \item Técnico coloca equipamento disponível para levantamento
+              \item Sistema muda estado de equipamento para pronto para levantamento
+              \item Sistema regista data e hora
+          \end{enumerate}
+          \begin{flushleft}
+              \textbf{Fluxo de Exceção 1 (passo 7) [falta de tempo]}
+          \end{flushleft}
+          \begin{itemize}
+              \item[3.1]{Técnico informa motivo de interrupção}
+              \item[3.2]{Sistema altera estado da reparação para aguarda reparacao}
+          \end{itemize}
+          \begin{flushleft}
+              \textbf{Fluxo de Exceção 2 (passo 7) [falta de peças]}
+          \end{flushleft}
+          \begin{itemize}
+              \item[3.1]{Técnico informa motivo de interrupção}
+              \item[3.2]{Sistema altera estado da reparação para aguarda reparacao}
+          \end{itemize}
+          \begin{flushleft}
+              \textbf{Fluxo Alternativo 3 (passo 7) [reparação excede valor orçamentado]}
+          \end{flushleft}
+          \begin{itemize}
+              \item[3.1]{Técnico insere contacto com cliente}
+              \item[3.2]{Sistema regista data, hora e técnico associado}
+              \item[3.3]{Regressa ao passo 3}
+          \end{itemize}
+          \begin{flushleft}
+              \textbf{Fluxo de Exceção 4 (passo 3.2, fluxo 2) [cliente recusa continuidade da reparação]}
+          \end{flushleft}
+          \begin{itemize}
+              \item[3.2.1]{Sistema coloca reparação como cancelada}
+              \item[3.2.2]{Técnico repõe o equipamento}
+              \item[3.2.3]{Técnico regista as horas gastas}
+              \item[3.2.4]{Técnico coloca equipamento disponível para levantamento}
+              \item[3.2.5]{Sistema muda estado de equipamento para pronto para levantamento}
+              \item[3.2.6]{Sistema muda estado da reparação para cancelada}
+              \item[3.2.7]{Sistema regista data e hora} 
+          \end{itemize}
+\end{itemize}
+
+\begin{landscape}
+    \begin{table}[!h]
+        \centering
+        \begin{tabular}{|p{5cm}|p{1cm}|p{4cm}|p{6cm}|p{3cm}|}
+            \hline
+            \rowcolor{gray!20!white}
+            Use Case & Fluxo                                            & Responsabilidade & API & Subsistema \\
+            \hline
+            \rowcolor{yellow}
+            Técnico consulta a sua agenda e indica o identificador da reparação a ser efetuada
+                     & UI
+                     & 
+                     & 
+                     & 
+            \\
+            \hline
+            Sistema devolve reparação
+                     & 
+                     & seleciona a reparação indicada
+                     & getReparacao(repId : String) : Reparacao
+                     & SubReparacoes
+            \\
+            \hline
+            Sistema altera estado da reparação para emReparacao
+                     & 
+                     & muda estado de reparação para emReparacao
+                     & alterarEstadoRep(repID : String , estado : ReparacaoEstado)
+                     & SubReparacoes
+            \\
+            \hline
+            \rowcolor{yellow}
+            Técnico pede o plano de trabalhos da reparação
+                     & UI
+                     & 
+                     & 
+                     & 
+            \\
+            \hline
+            \rowcolor{yellow}
+            Técnico indica os passos da reparação concretizados
+                     & UI
+                     & 
+                     & 
+                     & 
+            \\
+            \hline
+            Sistema regista passos da reparação como realizados
+                     & 
+                     & regista os passos da reparação realizados 
+                     & registaPassosRep(repID : String, passosRealizados : List<PassoReparacao>)
+                     & SubReparacoes
+            \\
+            \hline
+            Sistema regista a conclusão da reparação
+            Sistema muda estado da reparação para reparada
+                     & 
+                     & regista reparação como concluida
+                     & alterarEstadoRep(repID : String, estado : EstadoReparacao)
+                     & SubReparacoes
+            \\
+            \hline
+            Técnico coloca equipamento disponível para levantamento
+                     & UI
+                     & 
+                     & 
+                     & 
+            \\
+            \hline
+            Sistema muda estado de equipamento para pronto para levantamento
+            Sistema regista data e hora
+                     & 
+                     & muda estado de equipamento para pronto para levantamento e regista hora
+                     & alteraEstadoEq(equiID : String, state : EstadoEquipamento)
+                     & SubClientes
+            \\
+            \hline
+            \rowcolor{red!30}
+            Exceção  & 1                                                 &  \multicolumn{3}{c}{falta de tempo}\\
+            \hline
+            \rowcolor{yellow}
+            Técnico informa motivo de interrupção
+                     & UI
+                     & 
+                     & 
+                     & 
+            \\
+            \hline
+            Sistema altera estado da reparação para aguardaReparacao
+                     & 
+                     & muda estado de reparação para aguardaReparacao
+                     & alterarEstadoRep(repID : String , estado : ReparacaoEstado)
+                     & SubReparacoes
+            \\
+            \hline
+            \rowcolor{red!30}
+            Exceção  & 2                                                 &  \multicolumn{3}{c}{falta de peças}\\
+            \hline
+            \rowcolor{yellow}
+            Técnico informa motivo de interrupção
+                     & UI
+                     & 
+                     & 
+                     & 
+            \\
+            \hline
+            Sistema altera estado da reparação para aguardaReparacao
+                     & 
+                     & muda estado de reparação para aguardaReparacao
+                     & alterarEstadoRep(repID : String , estado : ReparacaoEstado)
+                     & SubReparacoes
+            \\
+            \hline
+            \rowcolor{green!30}
+            Alternativo  & 3                                                 &  \multicolumn{3}{c}{reparação excede valor orçamentado}\\
+            \hline
+            \rowcolor{yellow}
+            Técnico insere contacto com cliente
+                     & UI
+                     & 
+                     & 
+                     & 
+            \\
+            \hline
+            Sistema regista data, hora e técnico associado
+                     & 
+                     & regista a data, hora e técnico associado ao contacto ao cliente 
+                     & registaContacto(msg : String, tecID : String)
+                     & SubReparacoes
+            \\
+            \hline
+            Regressa ao passo 3
+                     & 
+                     & 
+                     & 
+                     & 
+            \\
+            \hline
+            \rowcolor{red!30}
+            Exceção  & 4                                               &  \multicolumn{3}{c}{cliente recusa continuidade da reparação}\\
+            \hline
+            Sistema coloca reparação como cancelada
+                     & 
+                     & cancela pedido reparação
+                     & alterarEstadoRep(repID : String, estado : EstadoReparacao)
+                     & SubReparacoes
+            \\
+            \hline
+            Técnico repõe o equipamento
+                     & 
+                     & 
+                     & 
+                     & 
+            \\
+            \hline
+            \rowcolor{yellow}
+            Técnico regista as horas gastas
+                     & UI
+                     & 
+                     & 
+                     & 
+            \\
+            \hline
+            \rowcolor{yellow}
+            Técnico coloca equipamento disponível para levantamento
+                     & UI
+                     & 
+                     & 
+                     & 
+            \\
+            \hline
+            Sistema muda estado de equipamento para pronto para levantamento
+            Sistema regista data e hora
+                     & 
+                     & muda estado de equipamento para pronto para levantamento e regista hora
+                     & alteraEstadoEq(equiID : String, state : EstadoEquipamento)
+                     & SubClientes
+            \\
+            \hline
+            Sistema muda estado da reparação para cancelada
+            Sistema regista data e hora
+                     & 
+                     & muda estado da reparação para cancelada
+                     & alterarEstadoRep(repID : String , estado : ReparacaoEstado)
+                     & SubReparacoes
+            \\
+            \hline
+        \end{tabular}
+        \caption{Análise Use Case - Realizar Reparação (ver \ref{realizar_rep})}
+    \end{table}
+\end{landscape}
+\end{document}

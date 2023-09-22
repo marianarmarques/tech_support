@@ -1,0 +1,52 @@
+\documentclass[../relatorio.tex]{subfiles}
+\begin{document}
+Arquivamento do equipamento pronto para levantar há 90 dias.
+Análogo ao caso de uso \textbf{Arquivar Orçamentos}, este, também, substitui o ator \textit{System Timer}
+pelo Gestor, dado a ser considerado mais apropriado para tomar esta decisão.
+
+Em termos de métodos, a lógica toda é tratada a partir do método \textit{darBaixaEquipamento}.
+\begin{itemize}
+    \item[Use Case] {\underline{Dar baixa do equipamento}}
+    \item[Cenários] {1}
+    \item[Pré-condição] {Gestor autenticado}
+    \item[Pós-condição] {Equipamento pronto para levantar há 90 dias é adicionado à lista de equipamentos abandonados}
+          \begin{flushleft}
+              \textbf{Fluxo Normal}
+          \end{flushleft}
+          \begin{enumerate}
+              \item Gestor informa que é uma hora definida
+              \item Sistema calcula todos os equipamentos prontos a levantar
+              \item Sistema filtra equipamentos prontos a levantar há mais de 90 dias
+              \item Sistema adiciona equipamentos à lista de equipamentos abandonados
+          \end{enumerate}
+\end{itemize}
+\begin{landscape}
+    \begin{table}[!h]
+        \centering
+        \begin{tabular}{|p{5cm}|p{1cm}|p{4cm}|p{6cm}|p{3cm}|}
+            \hline
+            \rowcolor{gray!20!white}
+            Use Case & Fluxo & Responsabilidade & API & Subsistema \\
+            \hline
+            \rowcolor{yellow}
+            Gestor informa que é uma hora definida
+                     & UI
+                     &
+                     &
+                     &
+            \\
+            \hline
+            Sistema calcula todos os equipamentos prontos a levantar 
+            Sistema filtra equipamentos prontos a levantar há mais de 90 dias
+            Sistema adiciona equipamentos à lista de equipamentos abandonados
+                     & 
+                     & Sistema adiciona os equipamentos prontos à 90 dias como abandonados
+                     & darBaixaEquipamentos():List<Equipamento>
+                     & SSCLientes
+            \\
+            \hline
+        \end{tabular}
+        \caption{Análise Use Case - Dar Baixa Equipamento (Ver \ref{dar_baixa_equipamento})}
+    \end{table}
+\end{landscape}
+\end{document}

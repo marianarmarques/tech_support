@@ -1,0 +1,91 @@
+\documentclass[../relatorio.tex]{subfiles}
+\begin{document}
+Encomenda do material que se encontra com o seu \textit{stock} a 0 e que é necessário para a concretização de algum passo.
+\begin{itemize}
+    \item[Use Case] {\underline{Encomendar material}}
+    \item[Cenários] {3 e 4}
+    \item[Pré-condição] {Colaborador especializado autenticado e reparações pendentes}
+    \item[Pós-condição] {Sistema regista nova encomenda}
+          \begin{flushleft}
+              \textbf{Fluxo Normal}
+          \end{flushleft}
+          \begin{enumerate}
+              \item Colaborador especializado pede material em falta para realizar reparações
+              \item Sistema calcula o material necessário para concluir os passos das reparações pendentes
+              \item Sistema calcula o material disponível
+              \item Sistema calcula o material necessário e sem \textit{stock} disponível
+              \item Sistema regista uma nova encomenda com o material não disponível mas necessário
+          \end{enumerate}
+          \begin{flushleft}
+              \textbf{Fluxo de Exceção 1 (passo 4) [material necessário está em \textit{stock}]}
+          \end{flushleft}
+          \begin{itemize}
+              \item[4.1] {Sistema comunica que não é necessário encomendar material}
+          \end{itemize}
+\end{itemize}
+
+\begin{landscape}
+    \begin{table}[!h]
+        \centering
+        \begin{tabular}{|p{5cm}|p{1cm}|p{4cm}|p{6cm}|p{3cm}|}
+            \hline
+            \rowcolor{gray!20!white}
+            Use Case & Fluxo & Responsabilidade & API & Subsistema \\
+            \hline
+            \rowcolor{yellow}
+            Colaborador especializado pede material em falta para realizar reparações
+                     & UI
+                     &
+                     &
+                     &
+            \\
+            \hline
+            Sistema calcula o material necessário para concluir os passos das reparações pendentes
+                     &
+                     & Sistema obtém o material necessário para concluir todas as reparações pendentes
+                     & getMaterial(): List<Material>
+                     & SubReparacoes
+            \\
+            \hline
+            Sistema calcula o material disponível
+                     &
+                     & Sistema calcula o material disponível
+                     & getMaterialDisponível(): List<Material>
+                     & SubReparacoes
+            \\
+            \hline
+            Sistema calcula o material necessário e sem \textit{stock} disponível
+                     &
+                     & Sistema calcula o material que não tem \textit{stock} e é necessário para as reparações
+                     & getMaterialSStock(): List<Material>
+                     & SubReparacoes
+            \\
+            \hline
+            Sistema regista uma nova encomenda com o material não disponível mas necessário
+                     &
+                     & Registar uma nova encomenda com o material requerido para as reparações	
+                     & addEncomenda(List<Material>)
+                     & SubReparacoes
+            \\
+            \hline
+            \rowcolor{red!30}
+            Exceção
+                     & 
+            1 
+                     & 
+            \multicolumn{3}{c}{material necessário está em \textit{stock}}
+            \\
+            \hline
+            \rowcolor{yellow}
+            Sistema comunica que não é necessário encomendar material
+                    & UI
+                    &
+                    &
+                    &
+            \\
+            \hline
+        \end{tabular}
+        \caption{Análise Use Case - Encomendar Material (Ver \ref{encomendar_material})}
+    \end{table}
+\end{landscape}
+\end{document}

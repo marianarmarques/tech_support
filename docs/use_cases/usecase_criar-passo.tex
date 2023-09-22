@@ -1,0 +1,167 @@
+\documentclass[../relatorio.tex]{subfiles}
+\begin{document}
+Registo no sistema de um novo passo, introduzindo o tempo e peças necessárias para a sua concretização.
+Como referido anteriormente, a \textbf{categoria de material} e a manipulação do \textit{stock} não é feita
+nesta iteração do projeto, contudo apresentam-se aqui para demonstrar como se incluiam, caso fossem futuramente
+implementadas.
+Neste sentido, o terceiro, quarto e quinto passos do fluxo normal e os fluxos alternativos 2 e 3 representam
+funcionalidades que não estão presentes de momento.
+\begin{itemize}
+    \item[Use Case] {\underline{Criar passo de reparação}}
+    \item[Cenários] {3}
+    \item[Pré-condição] {Colaborador especializado autenticado}
+    \item[Pós-condição] {Passo de reparação é adicionado ao Sistema}
+          \begin{flushleft}
+              \textbf{Fluxo Normal}
+          \end{flushleft}
+          \begin{enumerate}
+              \item Colaborador especializado insere nome do passo da reparação
+              \item Sistema verifica nome do passo da reparação
+              \item Colaborador especializado insere dados do passo da reparação
+              \item Colaborador especializado insere categoria do material
+              \item Sistema verifica categoria do material
+              \item Sistema regista passo de reparação
+          \end{enumerate}
+          \begin{flushleft}
+            \textbf{Fluxo de Exceção 1 (passo 2) [Nome já existe]}
+        \end{flushleft}
+        \begin{itemize}
+            \item[2.1]  Sistema comunica que nome do passo da reparação já existe
+        \end{itemize}
+          \begin{flushleft}
+		      \textbf{Fluxo Alternativo 2 (passo 4) [Material não registado]}
+	      \end{flushleft}
+	      \begin{itemize}
+		      \item[4.1]  $\ll include \gg$ Adicionar Material
+              \item[4.2] Regressa ao passo 5
+	      \end{itemize}
+          \begin{flushleft}
+            \textbf{Fluxo Alternativo 3 (passo 5) [Categoria não existe]}
+        \end{flushleft}
+        \begin{itemize}
+            \item[5.1] Sistema comunica que categoria não existe 
+            \item[5.2] Colaborador especializado insere nome da categoria 
+            \item[5.3] Sistema regista nova categoria
+            \item[5.4] Regressa ao passo 6
+        \end{itemize}
+\end{itemize}
+\begin{landscape}
+    \begin{table}[!h]
+        \centering
+        \begin{tabular}{|p{5cm}|p{1cm}|p{4cm}|p{6cm}|p{3cm}|}
+            \hline
+            \rowcolor{gray!20!white}
+            Use Case & Fluxo                                            & Responsabilidade & API & Subsistema \\
+            \hline
+            \rowcolor{yellow}
+            Colaborador especializado insere nome do passo da reparação
+                     & UI
+                     & 
+                     & 
+                     & 
+            \\
+            \hline
+            Sistema verifica nome do passo da reparação
+                     & 
+                     & verifica se o nome do passo já existe
+                     & existePasso(nomePasso : String) : boolean
+                     & SSReparacoes
+            \\
+            \hline
+            \rowcolor{yellow}
+            Colaborador especializado insere dados do passo da reparação
+                     & UI
+                     & 
+                     & 
+                     & 
+            \\
+            \hline
+            \rowcolor{yellow}
+            Colaborador especializado insere categoria do material
+                     & UI
+                     & 
+                     & 
+                     & 
+            \\
+            \hline
+            Sistema verifica categoria do material
+                     & 
+                     & verifica se categoria existe
+                     & existeCategoria(nomeCategoria):boolean
+                     & SSReparacoes
+            \\
+            \hline
+            Sistema regista passo de reparação
+                     & 
+                     & regista passo de reparação com os dados passados
+                     & criarPasso(String orcID, String nomePasso, String mat, Integer tempo, Integer qMat, Double custoMat)
+                     & SSReparacoes
+            \\
+            \hline
+            \rowcolor{red!30}
+            Exceção  & 1                                                 &  \multicolumn{3}{c}{Nome já existe}\\
+            \hline
+            \rowcolor{yellow}
+            Sistema comunica que nome do passo da reparação já existe
+                     & UI
+                     & 
+                     & 
+                     & 
+            \\
+            \hline
+            \rowcolor{green!30}
+            Alternativo  & 2                                                 &  \multicolumn{3}{c}{Material não registado}\\
+            \hline
+            $\ll include \gg$ Adicionar Material
+                     & 
+                     & 
+                     & 
+                     & 
+            \\
+            \hline
+            Regressa ao passo 5
+                     & 
+                     & 
+                     & 
+                     & 
+            \\
+            \hline
+            \rowcolor{green!30}
+            Alternativo  & 3                                                &  \multicolumn{3}{c}{Categoria não existe}\\
+            \hline
+            \rowcolor{yellow}
+            Sistema comunica que categoria não existe 
+                     & UI
+                     & 
+                     & 
+                     & 
+            \\
+            \hline
+            rowcolor{yellow}
+            Colaborador especializado insere nome da categoria 
+                     & UI
+                     & 
+                     & 
+                     & 
+            \\
+            \hline
+            Sistema regista nova categoria
+                     & 
+                     & regista categoria 
+                     & registaCategoria(nomeCategoria : String)
+                     & SSReparacoes
+            \\
+            \hline
+            Regressa ao passo 6
+                     & 
+                     & 
+                     & 
+                     & 
+            \\
+            \hline
+        \end{tabular}
+        \caption{Análise Use Case - Criar Passo de Reparação (ver \ref{criar_passo_rep})}
+    \end{table}
+\end{landscape}
+
+\end{document}

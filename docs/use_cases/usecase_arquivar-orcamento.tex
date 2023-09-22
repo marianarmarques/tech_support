@@ -1,0 +1,64 @@
+\documentclass[../relatorio.tex]{subfiles}
+\begin{document}
+Arquivamento dos orçamentos que não obtiveram resposta por parte do cliente há mais de 30 dias.
+A decisão do arquivo é feita pelo Gestor.
+
+Em relação ao fluxo do caso de uso apresentado na primeira fase, o presente diferencia-se no ator 
+que efetua o arquivo. 
+Previamente uma tarefa do \textit{System Timer}, com a remoção deste, foi necessária a mudança para 
+um ator novo, sendo o mais apropriado o Gestor.
+Como este possuí privilégios relativamente aos outros colaboradores, é considerado o mais apropriado 
+a efetuar a decisão.
+Apesar disto, os métodos definidos para a análise de requisitos da segunda fase permanecem os mesmos.
+\begin{itemize}
+    \item[Use Case] {\underline{Arquivar orçamento}}
+    \item[Cenários] {1}
+    \item[Pré-condição] {Gestor autenticado}
+    \item[Pós-condição] {Orçamentos com mais de 30 dias arquivados}
+          \begin{flushleft}
+              \textbf{Fluxo Normal}
+          \end{flushleft}
+          \begin{enumerate}
+              \item Gestor pede para arquivar os orçamentos que ja passaram 30 dias desde que foram enviados
+              \item Sistema filtra todos os orçamentos enviados
+              \item Sistema filtra orçamentos por data, ficando com os superiores a 30 dias
+              \item Sistema adiciona orçamentos ao arquivo e apresenta-os
+          \end{enumerate}
+\end{itemize}
+\begin{landscape}
+    \begin{table}[!h]
+        \centering
+        \begin{tabular}{|p{5cm}|p{1cm}|p{4cm}|p{6cm}|p{3cm}|}
+            \hline
+            \rowcolor{gray!20!white}
+            Use Case & Fluxo    & Responsabilidade & API & Subsistema    \\
+            \hline
+            \rowcolor{yellow}
+            Gestor pede para arquivar os orçamentos que ja passaram 30 dias desde que foram enviados
+                    & UI 
+                    &                                        
+                    &                                                          
+                    &               
+            \\
+            \hline
+            Sistema filtra todos os orçamentos enviados
+            Sistema filtra orçamentos por data, ficando com os superiores a 30 dias
+                    &          
+                    & filtrar orçamentos com mais de 30 dias 
+                    & filterOrcamentos(p : (o -> enviado() \& passouPrazo())): List<Orcamento> 
+                    & SSReparacoes 
+            \\
+            \hline
+            Sistema adiciona orçamentos ao arquivo                                  
+                    &          
+                    & mudar o estado do orçamento    
+                    & arquivaOrcamentos():List<Orcamento>                    
+                    & SSReparações 
+            \\
+            \hline
+        \end{tabular}
+        \caption{Identidade do Projeto.}
+    \end{table}
+\end{landscape}
+
+\end{document}

@@ -1,0 +1,53 @@
+\documentclass[../relatorio.tex]{subfiles}
+\begin{document}
+Registo de um novo colaborador no sistema pelo Gestor, sendo-lhe associado um número de identificação.
+\begin{itemize}
+    \item[Use Case] {\underline{Registar Colaborador}}
+    \item[Cenários] {1, 2, 3, 4 e 5} 
+    \item[Pré-condição] {Gestor autenticado}
+    \item[Pós-condição] {Novo colaborador registado}
+            \begin{flushleft}
+                \textbf{Fluxo Normal}
+            \end{flushleft}
+            \begin{enumerate}
+                \item Gestor insere nome e função do Colaborador
+                \item Sistema calcula número de identificação
+                \item Sistema regista Colaborador
+            \end{enumerate}
+\end{itemize}
+
+\begin{landscape}
+    \begin{table}[!h]
+        \centering
+        \begin{tabular}{|p{5cm}|p{1cm}|p{4cm}|p{6cm}|p{3cm}|}
+            \hline
+            \rowcolor{gray!20!white}
+            Use Case & Fluxo                                            & Responsabilidade & API & Subsistema \\
+            \hline
+            \rowcolor{yellow}
+            Gestor insere nome e função do Colaborador
+                     & UI
+                     & 
+                     & 
+                     & 
+            \\
+            \hline
+            Sistema calcula número de identificação
+                     & 
+                     & calcula número de identificação do novo colaborador
+                     & GetCurrentID() : Integer
+                     & SubColaboradores
+            \\
+            \hline
+            Sistema regista Colaborador
+                     & 
+                     & regista colaborador
+                     & registaColaborador(nome : String, tipo : Class<?>) : String
+                     & SubColaboradores
+            \\
+            \hline
+        \end{tabular}
+        \caption{Análise Use Case - Registar Colaborador (ver \ref{registar_colab})}
+    \end{table}
+\end{landscape}
+\end{document}
